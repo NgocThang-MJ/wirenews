@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation, Pagination } from "swiper";
+import { Autoplay, Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -23,18 +23,12 @@ async function fetchData() {
       },
     }
   );
-  console.log(res.data);
-  return res.data;
+  console.log(res.data.articles);
+  return res.data.articles;
 }
 
 function Home(props: IProps) {
-  const { isLoading, error, data } = useQuery(["trending"], fetchData, {
-    initialData: props.articles,
-  });
-
-  if (isLoading) return "Loading...";
-  if (error instanceof Error) return "An error has occured " + error.message;
-
+  console.log(props);
   return (
     <>
       <Head>
@@ -49,7 +43,7 @@ function Home(props: IProps) {
           modules={[Autoplay, Pagination]}
           className="mt-14"
         >
-          {data.articles.map(
+          {props.articles.map(
             (article: any) =>
               article.urlToImage && (
                 <SwiperSlide key={article.publishedAt}>
