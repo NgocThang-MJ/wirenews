@@ -2,7 +2,6 @@ import { GetStaticProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -11,11 +10,16 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
+import { ClockIcon } from "@heroicons/react/24/outline";
+
+import { IArticle } from "../interfaces/article";
+
 interface IProps {
-  articles: [];
+  articles: IArticle[];
 }
 
 function Home(props: IProps) {
+  console.log(props);
   return (
     <>
       <Head>
@@ -25,13 +29,18 @@ function Home(props: IProps) {
         <h1 className="text-5xl font-semibold">Trending</h1>
         <Swiper
           centeredSlides={true}
-          autoplay={{ delay: 3000, disableOnInteraction: true }}
+          autoplay={{
+            delay: 3000,
+            pauseOnMouseEnter: true,
+            disableOnInteraction: false,
+          }}
           pagination={{ clickable: true }}
+          grabCursor={true}
           modules={[Autoplay, Pagination]}
           className="mt-14"
         >
           {props.articles.map(
-            (article: any) =>
+            (article) =>
               article.urlToImage && (
                 <SwiperSlide key={article.publishedAt}>
                   <div className="flex justify-between mb-14">
@@ -55,9 +64,27 @@ function Home(props: IProps) {
                           </p>
                         </a>
                       </Link>
-                      <p className="text-[0.9rem] text-slate-600">
+                      <p className="text-[0.95rem] text-gray-500">
                         {article.description}
                       </p>
+                      <div className="text-[0.95rem] text-gray-600 font-semibold mt-3">
+                        {article.author} <span className="font-normal">in</span> {article.source.name}
+                      </div>
+                      {!!article.publishedAt && (
+                        <div className="text-sm text-gray-400 mt-3 flex items-center">
+                          <ClockIcon className="w-4 h-4 mr-2" />
+                          <p>
+                            {new Date(article.publishedAt).toLocaleDateString(
+                              "en-US",
+                              {
+                                day: "2-digit",
+                                month: "short",
+                                year: "numeric",
+                              }
+                            )}
+                          </p>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </SwiperSlide>
@@ -74,10 +101,10 @@ export default Home;
 export const getStaticProps: GetStaticProps = async () => {
   async function fetchData() {
     const res = await axios.get(
-      "https://newsapi.org/v2/top-headlines?pageSize=5&category=technology&language=en",
+      "https://newsapi.org/v2/top-headlines?pageSize=6&category=technology&language=en",
       {
         headers: {
-          Authorization: "40ec88e0c5614cf6affe314f530f12a8",
+          Authorization: `${process.env.API_KEY}`,
         },
       }
     );
