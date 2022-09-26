@@ -51,7 +51,11 @@ function Home() {
                     <Link href={article.url}>
                       <a target="_blank">
                         <div className="w-[33rem] mr-10">
-                          <img src={article.urlToImage} className="mr-10" />
+                          <img
+                            src={article.urlToImage}
+                            className="mr-10"
+                            crossOrigin="anonymous"
+                          />
                         </div>
                       </a>
                     </Link>
