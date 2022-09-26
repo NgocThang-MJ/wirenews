@@ -1,3 +1,4 @@
+import { GetStaticProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,21 +11,26 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-function Home() {
-  async function fetchData() {
-    const res = await axios.get(
-      "https://newsapi.org/v2/top-headlines?pageSize=5&category=technology&language=en",
-      {
-        headers: {
-          Authorization: "40ec88e0c5614cf6affe314f530f12a8",
-        },
-      }
-    );
-    console.log(res.data);
-    return res.data;
-  }
+interface IProps {
+  articles: [];
+}
+async function fetchData() {
+  const res = await axios.get(
+    "https://newsapi.org/v2/top-headlines?pageSize=5&category=technology&language=en",
+    {
+      headers: {
+        Authorization: "40ec88e0c5614cf6affe314f530f12a8",
+      },
+    }
+  );
+  console.log(res.data);
+  return res.data;
+}
 
-  const { isLoading, error, data } = useQuery(["trending"], fetchData);
+function Home(props: IProps) {
+  const { isLoading, error, data } = useQuery(["trending"], fetchData, {
+    initialData: props.articles,
+  });
 
   if (isLoading) return "Loading...";
   if (error instanceof Error) return "An error has occured " + error.message;
@@ -51,12 +57,7 @@ function Home() {
                     <Link href={article.url}>
                       <a target="_blank">
                         <div className="w-[33rem] mr-10">
-                          <Image
-                            src={article.urlToImage}
-                            className="mr-10"
-                            width={1000}
-                            height={600}
-                          />
+                          <img src={article.urlToImage} className="mr-10" />
                         </div>
                       </a>
                     </Link>
@@ -83,3 +84,13 @@ function Home() {
 }
 
 export default Home;
+
+export const getStaticProps: GetStaticProps = async () => {
+  const articles = await fetchData();
+
+  return {
+    props: {
+      articles,
+    },
+  };
+};
