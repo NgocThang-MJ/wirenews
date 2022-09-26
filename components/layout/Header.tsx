@@ -16,7 +16,7 @@ function Header() {
   return (
     <div className="mt-8 flex justify-between items-center">
       <Link href="/">
-        <a className="text-2xl md:text-3xl font-dancing">NewsWire</a>
+        <a className="text-2xl md:text-3xl font-dancing">WireNews</a>
       </Link>
       <form
         className="items-center hidden ml-8 bg-white rounded md:flex"
