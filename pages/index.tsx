@@ -57,7 +57,12 @@ function Home(props: IProps) {
                     <Link href={article.url}>
                       <a target="_blank">
                         <div className="w-[33rem] mr-10">
-                          <img src={article.urlToImage} className="mr-10" />
+                          <Image
+                            src={article.urlToImage}
+                            className="mr-10"
+                            width={1000}
+                            height={600}
+                          />
                         </div>
                       </a>
                     </Link>
