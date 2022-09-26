@@ -14,21 +14,8 @@ import "swiper/css/navigation";
 interface IProps {
   articles: [];
 }
-async function fetchData() {
-  const res = await axios.get(
-    "https://newsapi.org/v2/top-headlines?pageSize=5&category=technology&language=en",
-    {
-      headers: {
-        Authorization: "40ec88e0c5614cf6affe314f530f12a8",
-      },
-    }
-  );
-  console.log(res.data.articles);
-  return res.data.articles;
-}
 
 function Home(props: IProps) {
-  console.log(props);
   return (
     <>
       <Head>
@@ -85,6 +72,18 @@ function Home(props: IProps) {
 export default Home;
 
 export const getStaticProps: GetStaticProps = async () => {
+  async function fetchData() {
+    const res = await axios.get(
+      "https://newsapi.org/v2/top-headlines?pageSize=5&category=technology&language=en",
+      {
+        headers: {
+          Authorization: "40ec88e0c5614cf6affe314f530f12a8",
+        },
+      }
+    );
+    console.log(res.data.articles);
+    return res.data.articles;
+  }
   const articles = await fetchData();
 
   return {
