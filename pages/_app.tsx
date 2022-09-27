@@ -8,11 +8,13 @@ const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </QueryClientProvider>
+    <div className="bg-slate-50 p-8">
+      <QueryClientProvider client={queryClient}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </QueryClientProvider>
+    </div>
   );
 }
 

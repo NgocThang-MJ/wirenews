@@ -11,7 +11,7 @@ function Header() {
   const onSubmit = (e: MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!input) return;
-    router.push(`/search?title=${input}`);
+    router.push(`/search?q=${input}`);
   };
   return (
     <div className="mt-8 flex justify-between items-center">
@@ -19,7 +19,7 @@ function Header() {
         <a className="text-2xl md:text-3xl font-dancing">WireNews</a>
       </Link>
       <form
-        className="items-center hidden ml-8 bg-white rounded md:flex"
+        className="items-center hidden ml-8 rounded md:flex bg-slate-50"
         onSubmit={onSubmit}
       >
         <input
