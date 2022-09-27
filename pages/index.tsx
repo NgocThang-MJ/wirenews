@@ -25,6 +25,9 @@ interface IProps {
   sciencenews: {
     articles: IArticle[];
   };
+  generalnews: {
+    articles: IArticle[];
+  };
 }
 
 function Home(props: IProps) {
@@ -33,8 +36,8 @@ function Home(props: IProps) {
       <Head>
         <title>WireNews</title>
       </Head>
-      <div className="mt-8">
-        <h1 className="text-5xl font-semibold">Trending</h1>
+      <div className="mt-14">
+        <h1 className="text-5xl font-semibold">Top Headlines</h1>
         {/* Slider */}
         <Swiper
           centeredSlides={true}
@@ -48,7 +51,7 @@ function Home(props: IProps) {
           modules={[Autoplay, Pagination]}
           className="mt-14"
         >
-          {props.technews.articles.map(
+          {props.generalnews.articles.map(
             (article) =>
               article.urlToImage && (
                 <SwiperSlide key={article.publishedAt}>
@@ -112,12 +115,36 @@ function Home(props: IProps) {
           )}
         </Swiper>
 
+        {/* Tech */}
+        <div className="mt-14">
+          <h2 className="text-3xl font-semibold border-b border-b-gray-300 pb-2">
+            Technology
+          </h2>
+          <div className="mt-8 grid grid-cols-4 gap-6 gap-y-12">
+            {props.technews.articles.map(
+              (article) =>
+                article.urlToImage && (
+                  <ArticleItem
+                    key={article.publishedAt}
+                    urlToImage={article.urlToImage}
+                    url={article.url}
+                    title={article.title}
+                    author={article.author || ""}
+                    source={article.source.name || ""}
+                    category="Technology"
+                    publishedAt={article.publishedAt || ""}
+                  />
+                )
+            )}
+          </div>
+        </div>
+
         {/* Business */}
-        <div className="mt-5">
+        <div className="mt-14">
           <h2 className="text-3xl font-semibold border-b border-b-gray-300 pb-2">
             Business
           </h2>
-          <div className="mt-5 grid grid-cols-4 gap-6 gap-y-12">
+          <div className="mt-8 grid grid-cols-4 gap-6 gap-y-12">
             {props.businessnews.articles.map(
               (article) =>
                 article.urlToImage && (
@@ -129,6 +156,7 @@ function Home(props: IProps) {
                     author={article.author || ""}
                     source={article.source.name || ""}
                     category="Business"
+                    publishedAt={article.publishedAt || ""}
                   />
                 )
             )}
@@ -140,7 +168,7 @@ function Home(props: IProps) {
           <h2 className="text-3xl font-semibold border-b border-b-gray-300 pb-2">
             Science
           </h2>
-          <div className="mt-5 grid grid-cols-4 gap-6 gap-y-12">
+          <div className="mt-8 grid grid-cols-4 gap-6 gap-y-12">
             {props.sciencenews.articles.map(
               (article) =>
                 article.urlToImage && (
@@ -152,6 +180,7 @@ function Home(props: IProps) {
                     author={article.author || ""}
                     source={article.source.name || ""}
                     category="Science"
+                    publishedAt={article.publishedAt || ""}
                   />
                 )
             )}
@@ -165,8 +194,13 @@ function Home(props: IProps) {
 export default Home;
 
 export async function getStaticProps() {
+  const generalRes = await fetchHeadlines(
+    "?pageSize=6&category=general&language=en"
+  );
+  const generalnews = generalRes.data;
+
   const techRes = await fetchHeadlines(
-    "?pageSize=6&category=technology&language=en"
+    "?pageSize=8&category=technology&language=en"
   );
   const technews = techRes.data;
 
@@ -183,6 +217,7 @@ export async function getStaticProps() {
       technews,
       businessnews,
       sciencenews,
+      generalnews,
     },
   };
 }
