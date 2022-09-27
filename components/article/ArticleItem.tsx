@@ -19,6 +19,7 @@ function ArticleItem({
   source,
   category,
   publishedAt,
+  author,
 }: IProps) {
   return (
     <div className="overflow-hidden flex flex-col">
@@ -37,17 +38,23 @@ function ArticleItem({
 
       <div className="flex flex-col justify-between flex-grow mt-2">
         <div>
+          <Link href={url}>
+            <a target="_blank">
+              <p className="text-xl font-semibold mb-2">{title}</p>
+            </a>
+          </Link>
           {source && (
             <div className="text-[0.95rem] text-gray-600">{source}</div>
           )}
-          <p className="text-xl font-semibold">{title}</p>
         </div>
         <div className="flex items-center text-gray-600 mt-3">
-          <p className="mr-2">{category}</p>
+          {author && <p className="mr-2">{author}</p>}
           {publishedAt && (
             <>
-              {"-"}
-              <CalendarDaysIcon className="w-4 h-4 mx-2" />
+              {author && "-"}
+              <CalendarDaysIcon
+                className={`w-4 h-4 mr-2 ${author && "ml-2"}`}
+              />
               <p className="text-sm">
                 {new Date(publishedAt).toLocaleDateString("en-US", {
                   day: "2-digit",

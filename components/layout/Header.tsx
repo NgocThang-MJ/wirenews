@@ -16,7 +16,9 @@ function Header() {
   return (
     <div className="flex justify-between items-center">
       <Link href="/">
-        <a className="text-2xl md:text-4xl font-bodoni font-semibold">WireNews</a>
+        <a className="text-2xl md:text-4xl font-bodoni font-semibold">
+          WireNews
+        </a>
       </Link>
       <form
         className="items-center hidden ml-8 rounded md:flex bg-slate-50"

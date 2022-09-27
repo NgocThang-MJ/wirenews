@@ -44,7 +44,7 @@ function Search() {
                       title={article.title}
                       author={article.author || ""}
                       source={article.source.name || ""}
-publishedAt={article.publishedAt || ""}
+                      publishedAt={article.publishedAt || ""}
                     />
                   )
               )}
