@@ -8,11 +8,14 @@ export default async function Search(
   try {
     let q = req.query.q as string;
     console.log(q);
-    const response = await axios.get(`${process.env.EVERYTHING}?q=${q}&pageSize=20`, {
-      headers: {
-        Authorization: `${process.env.API_KEY}`,
-      },
-    });
+    const response = await axios.get(
+      `${process.env.EVERYTHING}?q=${q}&pageSize=20`,
+      {
+        headers: {
+          Authorization: `${process.env.API_KEY}`,
+        },
+      }
+    );
     console.log(response.data);
     res.status(200).json(response.data);
   } catch (err) {

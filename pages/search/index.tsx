@@ -30,7 +30,7 @@ function Search() {
       <div>
         <div className="mt-5">
           <h2 className="text-3xl font-semibold border-b border-b-gray-300 pb-2">
-            Results for "{q}"
+            Results for &quot;{q}&quot;
           </h2>
           {articles.length > 0 && (
             <div className="mt-10 grid grid-cols-4 gap-6 gap-y-12">

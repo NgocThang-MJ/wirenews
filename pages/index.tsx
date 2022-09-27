@@ -57,10 +57,15 @@ function Home(props: IProps) {
                       <a target="_blank">
                         <div className="w-[33rem] mr-10">
                           <Image
-                            src={article.urlToImage.includes("http") ? article.urlToImage : "http:" + article.urlToImage}
+                            src={
+                              article.urlToImage.includes("http")
+                                ? article.urlToImage
+                                : "https:" + article.urlToImage
+                            }
                             className="mr-10"
                             width={1000}
                             height={600}
+                            alt="News Cover"
                           />
                         </div>
                       </a>
